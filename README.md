@@ -50,13 +50,16 @@
       <a href="#Update">Update</a>
     </li>
     <li>
+      <a href="#Dataset Download Link">Update</a>
+    </li>
+    <li>
       <a href="#installation">Installation</a>
     </li>
     <li>
       <a href="#usage">Usage</a>
       <ol>
-        <li><a href="">Run</a></li>
-        <li><a href="">Evaluation</a></li>
+        <li><a href="#run">Run</a></li>
+        <li><a href="#evaluation">Evaluation</a></li>
       </ol>
     </li>
     <li>
