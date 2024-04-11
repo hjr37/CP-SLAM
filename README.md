@@ -24,7 +24,7 @@
 </p>
 
 <p align="left">
-  <p style="text-align: justify;">This is the official implementation of <strong>CP-SLAM: Collaborative Neural Point-based SLAM System</strong>. CG-SLAM can ...</p>
+  <p style="text-align: justify;">This is the official implementation of <strong>CP-SLAM: Collaborative Neural Point-based SLAM System</strong>. CP-SLAM system demonstrates remarkable capabilities in multi-agent deployment and achieves state-of-the-art performance in tracking, map construction, and rendering.</p>
   <a href="">
     <img src="https://raw.githubusercontent.com/hjr37/open_access_assets/main/cp-slam/images/pipeline.jpg" alt="CP-SLAM pipeline" width="100%">
   </a>
@@ -74,7 +74,7 @@
 
 # Update
 
-- [ ] Code for RGBD-SLAM
+- [ ] Code for SLAM
 - [ ] Code for Evaluation
 
 # Dataset Download Link
@@ -103,3 +103,13 @@ We provide the <a href="https://huggingface.co/datasets/wssy37/CP-SLAM_dataset">
 # Acknowledgement
 
 # Citation
+```
+@misc{hu2023cpslam,
+      title={CP-SLAM: Collaborative Neural Point-based SLAM System}, 
+      author={Jiarui Hu and Mao Mao and Hujun Bao and Guofeng Zhang and Zhaopeng Cui},
+      year={2023},
+      eprint={2311.08013},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
