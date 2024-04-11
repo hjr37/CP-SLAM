@@ -66,7 +66,7 @@
 
 # News
 
-- [x] 2024.04.11 We have updated the `README.md` and are preparing to open-source our code！  
+- [x] 2024.04.11 --- We have updated the `README.md` and are preparing to open-source our code！  
 - [ ] Code for SLAM
 - [ ] Code for Evaluation
 
