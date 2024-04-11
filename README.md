@@ -29,28 +29,20 @@
     <img src="https://raw.githubusercontent.com/hjr37/open_access_assets/main/cp-slam/images/pipeline.jpg" alt="CP-SLAM pipeline" width="100%">
   </a>
 </p>
-<div style="display: flex;">
-  <div style="flex: 50%; padding-right: 10px;">
-    <video width="100%" controls>
-      <source src="https://raw.githubusercontent.com/hjr37/open_access_assets/main/cp-slam/video/single.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div style="flex: 50%; padding-left: 10px;">
-    <video width="100%" controls>
-      <source src="https://raw.githubusercontent.com/hjr37/open_access_assets/main/cp-slam/video/collaboration.mp4" type="video/mp4">
-    </video>
-  </div>
-</div>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/hjr37/open_access_assets/main/cp-slam/video/single.gif" alt="Single GIF" width="48%">
+  <img src="https://raw.githubusercontent.com/hjr37/open_access_assets/main/cp-slam/video/collaboration.gif" alt="Collaboration GIF" width="48%">
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details open="open" style='padding: 10px; border-radius:5px 15px 15px 5px; border-style: solid; border-width: 1px;'>
   <summary><strong>Table of Contents</strong></summary>
   <ol>
     <li>
-      <a href="#Update">Update</a>
+      <a href="#News">News</a>
     </li>
     <li>
-      <a href="#Dataset Download Link">Update</a>
+      <a href="#Dataset Download Link">Dataset Download Link</a>
     </li>
     <li>
       <a href="#installation">Installation</a>
@@ -72,8 +64,9 @@
 </details>
 
 
-# Update
+# News
 
+- [x] 2024.04.11 We have updated the `README.md` and are preparing to open-source our code！  
 - [ ] Code for SLAM
 - [ ] Code for Evaluation
 
