@@ -9,7 +9,7 @@
   <p align="center">
     <a href="https://github.com/hjr37/"><strong>Jiarui Hu</strong><sup>1</sup></a>
     ·
-    <a href="https://github.com/TwiceMao/"><strong>MaoMao</strong><sup>1</sup></a>
+    <a><strong>MaoMao</strong><sup>1</sup></a>
     <a href="http://www.cad.zju.edu.cn/home/bao/"><strong>Hujun Bao</strong><sup>1</sup></a>
     ·
     <a href="http://www.cad.zju.edu.cn/home/gfzhang/"><strong>Guofeng Zhang</strong><sup>1</sup></a>
