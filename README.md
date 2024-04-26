@@ -67,7 +67,7 @@
 # News
 
 - [x] 2024.04.11 --- We have updated the `README.md` and are preparing to open-source our code！  
-- [x] 2024.04.26 --- Code for some core modules, including loop detection, pose graph, federated center, and shared data structure (detailed comments will come soon).
+- [x] 2024.04.26 --- Code for some core modules, including `loop detection`, `pose graph`, `federated center`, and `shared data structure` (detailed comments will come soon).
 - [ ] Code for Evaluation
 
 # Dataset Download Link
