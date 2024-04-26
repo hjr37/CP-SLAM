@@ -76,6 +76,7 @@ We provide the <a href="https://huggingface.co/datasets/wssy37/CP-SLAM_dataset">
 
 - Four single-agent trajectories. Each contains 1500 RGB-D frames.
 - Four two-agent trajectories. Each  is divided into 2 portions, holding 2500 frames, with the exception of Office-0 which includes 1950 frames per part.
+- Two pre-trained NetVLAD models for the loop detection module. 
 </p>
 
 # Installation
