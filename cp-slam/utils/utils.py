@@ -313,8 +313,8 @@ def get_samples(H, W, n, K, c2w, depth, color, mask_scale, device):
     return rays_o, rays_d, sample_depth, sample_color, i, j 
 
 def select_points(new_added_points, vox_res, occupt_list, new_feature, uv, device, source_table = None, space_min=None,):
-    space_min = torch.tensor([-4.0735, -6.5748, -8.8496], device=device)
-    space_edge = torch.tensor(14.0808, device=device)#14.0808
+    space_min = torch.tensor([-4.0735, -6.5748, -8.8496], device=device) # refer to point-nerf
+    space_edge = torch.tensor(14.0808, device=device) # refer to point-nerf
     construct_vox_sz = space_edge / vox_res
 
     new_added_points_shift = new_added_points - space_min[None, ...]
