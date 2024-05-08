@@ -9,6 +9,9 @@ from src.rendering import *
 
 mse2psnr = lambda x : -10. * torch.log(x) / torch.log(torch.Tensor([10.]))
 class PoseGraphOptimization(g2o.SparseOptimizer):
+    '''
+    Optimizer for pose graph optimization
+    '''
     def __init__(self):
         super().__init__()
         solver = g2o.BlockSolverSE3(g2o.LinearSolverEigenSE3())
@@ -36,7 +39,7 @@ class PoseGraphOptimization(g2o.SparseOptimizer):
                 v = self.vertex(v)
             edge.set_vertex(i, v)
 
-        edge.set_measurement(measurement)  # relative pose
+        edge.set_measurement(measurement)
         edge.set_information(information)
         if robust_kernel is not None:
             edge.set_robust_kernel(robust_kernel)
@@ -46,6 +49,9 @@ class PoseGraphOptimization(g2o.SparseOptimizer):
         return self.vertex(id).estimate()
 
 class Pose_graph:
+    '''
+    Pose graph main class
+    '''
     def __init__(self) -> None:
         self.posegraph_optimizer = None
         self.optimize_iter = 1000
@@ -55,10 +61,10 @@ class Pose_graph:
         pose = g2o.Isometry3d(orientation, trans)
         self.posegraph_optimizer.add_vertex(id, pose, fixed)
     def add_single_edge(self, observation, id_1, id_2):
-        orientation = g2o.Quaternion(observation[:3,:3]) #-------convert to se3 in numpy---------
+        orientation = g2o.Quaternion(observation[:3,:3]) 
         trans = observation[:3, 3]
         delta_pose = g2o.Isometry3d(orientation, trans)
-        self.posegraph_optimizer.add_edge(vertices=(id_2, id_1), measurement=delta_pose)  #last frame(id) pose --> current frame pose(id+1)
+        self.posegraph_optimizer.add_edge(vertices=(id_2, id_1), measurement=delta_pose)  
     def add_vertex(self, pose_list):
         for i in range(len(pose_list)):
             fixed = False
@@ -70,7 +76,7 @@ class Pose_graph:
             self.posegraph_optimizer.add_vertex(i, pose, fixed)
     def add_edge(self, observations):
         for i in range(len(observations)+1):
-            orientation = g2o.Quaternion(observations[i].detach().cpu().numpy()[:3,:3]) #-------convert to se3 in numpy---------
+            orientation = g2o.Quaternion(observations[i].detach().cpu().numpy()[:3,:3]) 
             trans = observations[i].detach().cpu().numpy()[:3, 3]
             delta_pose = g2o.Isometry3d(orientation, trans)
             if i == len(observations):
@@ -83,7 +89,7 @@ class Pose_graph:
     def optimization(self):
         self.posegraph_optimizer.optimize(self.optimize_iter)
 
-    def difference(self, total, part):  # difference but no sort in return
+    def difference(self, total, part):  
         total = map(tuple, total.tolist())
         set_total = set(total)
         part = map(tuple, part.tolist())
@@ -108,7 +114,7 @@ class Pose_graph:
         else:
             with torch.no_grad():
                 feature_new = update_feature_single(frame, feature_encoder, cfg['camera']['H'], cfg['camera']['W'], uv_filtered_list, False).T        
-        ranges = torch.as_tensor([-10.0, -10.0, -10.0, 10.0, 10.0, 10.0], device='cuda:0', dtype=torch.float32)
+        ranges = torch.as_tensor(cfg['scene_ranges'], device='cuda:0', dtype=torch.float32)
         mask = torch.prod(torch.logical_and(points_3d_world >= ranges[None, :3], points_3d_world <= ranges[None, 3:]), dim=-1) > 0
         points_3d_world = points_3d_world[mask]
         feature_new = feature_new[mask]

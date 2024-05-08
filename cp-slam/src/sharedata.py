@@ -8,6 +8,9 @@ class ShareDataProxy(NamespaceProxy):
 
 
 class Sharedata:
+    '''
+    Sharing data class among different classes
+    '''
     def __init__(self) -> None:
         global lock
         lock = mp.RLock()
@@ -32,10 +35,17 @@ class Sharedata:
         self.loop_id = None
         self.est_poses_tensor = None
         self.gt_poses_tensor = None
+
     @property
     def keyframe_list(self):
+        '''
+        Return sharing keyframe list
+        '''
         return deepcopy(self.keyframe_list_val)
 
     @keyframe_list.setter
     def keyframe_list(self, keyframe):
+        '''
+        Include newly added keyframes
+        '''
         self.keyframe_list_val.append(keyframe)

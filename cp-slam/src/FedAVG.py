@@ -1,31 +1,45 @@
 import torch
 from copy import deepcopy
+
 class FedAVG():
+    '''
+    Federated learning for sharing MLPs
+    '''
     def __init__(self, device) -> None:
         self.device = device
         self.f_net = None
         self.density_net = None
         self.radiance_net = None
+        
     def avg(self, share_data_one, share_data_two):
+        '''
+        MLP weights averaging
+        '''
         w_avg = {'f_net':[], 'density_net':[], 'radiance_net':[]}
         w_avg['f_net'] = deepcopy(share_data_one.f_net.state_dict())
         w_avg['density_net'] = deepcopy(share_data_one.density_net.state_dict())
         w_avg['radiance_net'] = deepcopy(share_data_one.radiance_net.state_dict())
         
-        for k in w_avg['f_net'].keys():  #average f_net
+        #average f_net
+        for k in w_avg['f_net'].keys():
             w_avg['f_net'][k] += share_data_two.f_net.state_dict()[k]
             w_avg['f_net'][k] = torch.true_divide(w_avg['f_net'][k], 2)
             
-        for k in w_avg['density_net'].keys():  #average density_net
+        #average density_net
+        for k in w_avg['density_net'].keys(): 
             w_avg['density_net'][k] += share_data_two.density_net.state_dict()[k]
             w_avg['density_net'][k] = torch.true_divide(w_avg['density_net'][k], 2)
 
-        for k in w_avg['radiance_net'].keys():  #average radiance_net
+        #average radiance_net
+        for k in w_avg['radiance_net'].keys(): 
             w_avg['radiance_net'][k] += share_data_two.radiance_net.state_dict()[k]
             w_avg['radiance_net'][k] = torch.true_divide(w_avg['radiance_net'][k], 2)
         
         return w_avg
     def federate(self,share_data_one, share_data_two, event_one, event_two):
+        '''
+        Federated weights updating
+        '''
         while(1):
             if not (event_one.is_set() or event_two.is_set()):
                 w_avg = self.avg(share_data_one, share_data_two)
