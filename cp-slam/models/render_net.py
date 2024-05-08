@@ -1,5 +1,8 @@
 import torch.nn as nn
 class density_net(nn.Module):
+    '''
+    decoder for density
+    '''
     def __init__(self, input_channel, intermediate_channel, output_channel):
         super(density_net, self).__init__()
         self.embedding_one = nn.Sequential(
@@ -15,6 +18,9 @@ class density_net(nn.Module):
         return x
 
 class radiance_net(nn.Module):
+    '''
+    decoder for radiance
+    '''
     def __init__(self, input_channel, intermediate_channel, output_channel):
         super(radiance_net, self).__init__()
         self.embedding_one = nn.Sequential(

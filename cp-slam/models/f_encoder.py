@@ -4,6 +4,9 @@ from utils import *
 from inplace_abn import InPlaceABN 
 
 class ConvBnReLU(nn.Module):
+    '''
+    unit net block
+    '''
     def __init__(self, in_channels, out_channels,
                  kernel_size=3, stride=1, pad=1,
                  norm_act=InPlaceABN):
@@ -18,7 +21,7 @@ class ConvBnReLU(nn.Module):
 
 class FeatureNet_multi(nn.Module):
     """
-    output 3 levels of features using a FPN structure
+    2D feature network for neural point features
     """
     def __init__(self, intermediate=False, norm_act=InPlaceABN):
         super(FeatureNet_multi, self).__init__()
@@ -43,7 +46,9 @@ class FeatureNet_multi(nn.Module):
 
 
     def forward(self, x):
-        
+        '''
+        multi-level feature or not
+        '''
         if self.intermediate:
             x1 = self.conv0(x)  # (B, 8, H, W)
             x2 = self.conv1(x1)  # (B, 16, H//2, W//2)
@@ -63,7 +68,10 @@ class FeatureNet_multi(nn.Module):
             x = F.interpolate(x, scale_factor=4, mode='bilinear', align_corners=False)
             return [x]
 
-class F_net(nn.Module):  #TODO: relative position need encoding?
+class F_net(nn.Module):
+    '''
+    refer to Point-NeRF
+    '''
     def __init__(self, input_channel, intermediate_channel, output_channel):
         super(F_net , self).__init__()
         self.embedding_one = nn.Sequential(
@@ -80,7 +88,10 @@ class F_net(nn.Module):  #TODO: relative position need encoding?
         x = self.embedding_two(x)
         return x
 
-class F_net_radiance(nn.Module):  #TODO: relative position need encoding?
+class F_net_radiance(nn.Module):
+    '''
+    refer to Point-NeRF
+    '''  
     def __init__(self, input_channel, intermediate_channel, output_channel):
         super(F_net_radiance , self).__init__()
         self.embedding_one = nn.Sequential(
