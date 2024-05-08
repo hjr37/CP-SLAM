@@ -17,8 +17,6 @@ class Camera:
             self.device = device
 
       def unprojection(self, uv_list, corr_depth_list):
-            # uv_list = torch.tensor(uv_list)
-            # corr_depth_list = torch.tensor(corr_depth_list)
             ones = torch.ones(uv_list.shape[0], device=self.device).reshape(-1,1)
             uv_hm_list = torch.cat([uv_list, ones], dim=-1)
             norm = torch.matmul(torch.linalg.inv(self.intrinsics), uv_hm_list.T)
