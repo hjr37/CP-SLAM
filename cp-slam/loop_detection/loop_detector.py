@@ -15,6 +15,7 @@ from src.map import *
 class LoopDetector():
     def __init__(self, conf, device) -> None:
         self.img_db = []
+        # pre-trained NetVLAD model
         self.detector = netvlad.NetVLAD(conf).eval().to(device)
         self.des_db = []
         self.loop_launch_id = None
@@ -22,6 +23,9 @@ class LoopDetector():
         self.sim_threshold = None
     
     def get_frame_des(self, frame):
+        '''
+        extract single frame descriptor
+        '''
         image = frame.img.permute(2,0,1).unsqueeze(0)
         image = image/255.
         image = torch.clamp(image,min=0,max=1)
@@ -29,11 +33,17 @@ class LoopDetector():
         return des
 
     def add_des(self, des):
+        '''
+        add descriptor into pool
+        '''
         self.des_db.append(des)
     
     def detection(self, cur_frame, keyframe_list):
+        '''
+        descriptor similarity score and matching
+        '''
 
-        if len(self.des_db) < self.loop_launch_id:   # loop start from loop_launch_id
+        if len(self.des_db) < self.loop_launch_id:
             return None
 
         cur_des  =self.get_frame_des(cur_frame)
@@ -43,10 +53,10 @@ class LoopDetector():
         max_score = torch.max(sim_score)
         match_frame_id = torch.argmax(sim_score)
 
-        if (cur_frame.id - keyframe_list[match_frame_id].id) < self.min_time_diff:  # time filter
+        if (cur_frame.id - keyframe_list[match_frame_id].id) < self.min_time_diff:  
             return None
         
-        if max_score < self.sim_threshold: # score filter
+        if max_score < self.sim_threshold:
             return None
 
         return {'similiar_score':max_score, 'id':match_frame_id}
