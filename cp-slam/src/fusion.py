@@ -24,6 +24,7 @@ class Fusion():
         self.cfg = cfg
         self.threshold = cfg_one['threshold']
         self.threshold_coarse = cfg_one['threshold_coarse']
+        self.outliers = cfg_one['outliers']
         self.device = device
         self.optimizer = Optimizer(cfg, self.device)
         self.pose_graph = Pose_graph() 
@@ -335,8 +336,6 @@ class Fusion():
         gt_poses_two = list(share_data_two.gt_poses_tensor)
         constraints_couples, socres = self.get_loop_constraints(share_data_one.des_db, share_data_two.des_db, self.device)
         constraints_couples = constraints_couples.tolist()
-        # print(constraints_couples) #todo: delete in final version
-        # print(socres)
         
         # add vertex for agent_one
         for id, pose in enumerate(one_poses_list): 
@@ -364,7 +363,7 @@ class Fusion():
 
         # add loop edges in the global pose graph
         for loop_couple in constraints_couples:
-            if loop_couple in [[26,48],[27,47],[45,36]]:  #todo: revise here
+            if loop_couple in self.outliers:
                 continue
             self.copy_net(share_data_one, self.device)
             loop_frame_one = deepcopy(share_data_one.keyframe_list_val[loop_couple[0]])
@@ -427,9 +426,7 @@ class Fusion():
         map_frame_two = torch.unique(source_table_two[:,2:3].squeeze().type(torch.int64)).tolist()
 
         #Refine neural point cloud based on the keyframe-centric model
-        #todo: revise code in the end, delete or not?
         recon_total_map, recon_feature_map, recon_source_table = self.re_scatter(map_frame_one, source_table_one, feature_map_one, one_poses_list, map_frame_two, source_table_two, feature_map_two, two_poses_list)
         torch.save(recon_total_map, self.cfg['output_pgo_traj'] + 'pgo_map.pt')
-        self.copy_net(share_data_two, self.device)
-        self.optimizer.render_optimizer = self.optimizer.create_net_optimizer()
-        self.optimizer.render_scheduler = self.optimizer.create_scheduler(self.optimizer.render_optimizer)
+
+        print('Complete Exploration!!!')
